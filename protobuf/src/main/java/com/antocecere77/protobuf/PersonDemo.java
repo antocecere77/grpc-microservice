@@ -2,21 +2,25 @@ package com.antocecere77.protobuf;
 
 import com.antocecere77.models.Person;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class PersonDemo {
 
-    public static void main(String[] args) {
-        Person sam1 = Person.newBuilder()
+    public static void main(String[] args) throws IOException {
+        Person sam = Person.newBuilder()
                 .setName("sam")
                 .setAge(18)
                 .build();
 
-        Person sam2 = Person.newBuilder()
-                .setName("sam")
-                .setAge(18)
-                .build();
+        Path path = Paths.get("sam.ser");
+        Files.write(path, sam.toByteArray());
 
-        System.out.println(sam1);
+        byte[] bytes = Files.readAllBytes(path);
+        Person newSam = Person.parseFrom(bytes);
 
-        System.out.println(sam1.equals(sam2));
+        System.out.println(newSam);
     }
 }
