@@ -1,5 +1,6 @@
 package com.antocecere77.protobuf;
 
+import com.antocecere77.models.BodyStyle;
 import com.antocecere77.models.Car;
 import com.antocecere77.models.Dealer;
 
@@ -10,6 +11,7 @@ public class MapDemo {
                 .setMake("Honda")
                 .setModel("Accord")
                 .setYear(2020)
+                .setBodyStyle(BodyStyle.COUPE)
                 .build();
 
         Car civic = Car.newBuilder()
@@ -27,5 +29,8 @@ public class MapDemo {
         System.out.println(dealer.getModelOrDefault(2019, accord));
 
         System.out.println(dealer.getModelMap());
+
+        System.out.println(dealer.getModelOrThrow(2005).getBodyStyle());
+        System.out.println(dealer.getModelOrThrow(2020).getBodyStyle());
     }
 }
