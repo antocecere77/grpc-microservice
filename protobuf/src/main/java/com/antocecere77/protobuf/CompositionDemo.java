@@ -3,6 +3,7 @@ package com.antocecere77.protobuf;
 import com.antocecere77.models.Address;
 import com.antocecere77.models.Car;
 import com.antocecere77.models.Person;
+import com.google.protobuf.Int32Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class CompositionDemo {
 
         Person sam = Person.newBuilder()
                 .setName("sam")
-                .setAge(25)
+                .setAge(Int32Value.newBuilder().setValue(25).build())
                 .setAddress(address)
                 //.addCar(accord)
                 //.addCar(civic)
