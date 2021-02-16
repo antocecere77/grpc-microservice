@@ -10,17 +10,18 @@ import java.nio.file.Paths;
 public class VersionCompatibilityTest {
 
     public static void main(String[] args) throws IOException {
+        Path pathV1 = Paths.get("tv-v1");
+        Path pathV2 = Paths.get("tv-v2");
 
-        Television television = Television.newBuilder()
+      /*  Television television = Television.newBuilder()
                 .setBrand("sony")
-                .setYear(2015)
+                .setModel(2010)
+                .setType(Type.OLED)
                 .build();
 
-        Path pathV1 = Paths.get("tv-v1");
-        Files.write(pathV1, television.toByteArray());
+        Files.write(pathV2, television.toByteArray());*/
 
-        byte[] bytes = Files.readAllBytes(pathV1);
+        byte[] bytes = Files.readAllBytes(pathV2);
         System.out.println(Television.parseFrom(bytes));
-
     }
 }
