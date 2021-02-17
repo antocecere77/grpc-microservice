@@ -20,7 +20,7 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
     @Override
     public void withdraw(WithdrawRequest request, StreamObserver<Money> responseObserver) {
         int accountNumber = request.getAccountNumber();
-        int amount = request.getAccountNumber();
+        int amount = request.getAmount();
         int balance = AccountDatabase.getBalance(accountNumber);
 
         for (int i = 0; i < (amount/10); i++) {
