@@ -27,7 +27,7 @@ public class BankClientTest {
     @Test
     public void balanceTest() {
         BalanceCheckRequest balanceCheckRequest = BalanceCheckRequest.newBuilder()
-                .setAccountNumber(5)
+                .setAccountNumber(2)
                 .build();
         Balance balance = this.blockingStub.getBalance(balanceCheckRequest);
 
