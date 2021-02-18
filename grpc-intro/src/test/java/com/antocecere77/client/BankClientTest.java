@@ -1,13 +1,11 @@
 package com.antocecere77.client;
 
-import com.antocecere77.models.Balance;
-import com.antocecere77.models.BalanceCheckRequest;
-import com.antocecere77.models.BankServiceGrpc;
-import com.antocecere77.models.WithdrawRequest;
+import com.antocecere77.models.*;
 import com.antocecere77.server.BankService;
 import com.google.common.util.concurrent.Uninterruptibles;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -61,6 +59,21 @@ public class BankClientTest {
                 .build();
 
         this.bankServiceStub.withdraw(withdrawRequest, new MoneyStreamingResponse(latch));
+        latch.await();
+    }
+
+    @Test
+    public void cashStreamingRequest() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+        StreamObserver<DepositRequest> streamObserver = this.bankServiceStub.cashDeposit(new BalanceStreamObserver(latch));
+        for (int i = 0; i < 10; i++) {
+            DepositRequest depositRequest = DepositRequest.newBuilder()
+                    .setAccountNumber(8)
+                    .setAmount(10)
+                    .build();
+            streamObserver.onNext(depositRequest);
+        }
+        streamObserver.onCompleted();
         latch.await();
     }
 }
