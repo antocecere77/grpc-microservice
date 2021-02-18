@@ -3,6 +3,7 @@ package com.antocecere77.client;
 import com.antocecere77.models.Balance;
 import com.antocecere77.models.BalanceCheckRequest;
 import com.antocecere77.models.BankServiceGrpc;
+import com.antocecere77.models.WithdrawRequest;
 import com.antocecere77.server.BankService;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -32,5 +33,16 @@ public class BankClientTest {
         Balance balance = this.blockingStub.getBalance(balanceCheckRequest);
 
         System.out.println("Received: " + balance.getAmount());
+    }
+
+    @Test
+    public void withdrawTest() {
+        WithdrawRequest withdrawRequest = WithdrawRequest.newBuilder()
+                .setAccountNumber(7)
+                .setAmount(40)
+                .build();
+
+        this.blockingStub.withdraw(withdrawRequest)
+                .forEachRemaining(money -> System.out.println("Received " + money.getValue()));
     }
 }
