@@ -1,6 +1,7 @@
 package com.antocecere77.server;
 
 import com.antocecere77.models.*;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
 public class BankService extends BankServiceGrpc.BankServiceImplBase {
@@ -23,6 +24,13 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
         int amount = request.getAmount();
         int balance = AccountDatabase.getBalance(accountNumber);
 
+        if(balance < amount) {
+            Status status = Status.FAILED_PRECONDITION.withDescription("no enough money. You have only " + balance);
+            responseObserver.onError(status.asRuntimeException());
+            return;
+        }
+
+        // all the validation passed
         for (int i = 0; i < (amount/10); i++) {
             Money money = Money.newBuilder().setValue(10).build();
             responseObserver.onNext(money);
