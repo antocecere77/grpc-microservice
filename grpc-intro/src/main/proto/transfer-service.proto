@@ -20,8 +20,8 @@ enum TransferStatus {
 }
 
 message TransferResponse {
-  TransferStatus status;
-  repeated Account account = 2;
+  TransferStatus status = 1;
+  repeated Account accounts = 2;
 }
 
 service TransferService {
