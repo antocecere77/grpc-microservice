@@ -3,12 +3,14 @@ package com.antocecere77.game.client;
 import com.antocecere77.models.Die;
 import com.antocecere77.models.GameState;
 import com.antocecere77.models.Player;
+import com.google.common.util.concurrent.Uninterruptibles;
 import io.grpc.stub.StreamObserver;
 import io.grpc.stub.StreamObservers;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 public class GameStateStreamingResponse implements StreamObserver<GameState> {
 
@@ -28,6 +30,7 @@ public class GameStateStreamingResponse implements StreamObserver<GameState> {
             System.out.println("Game Over!");
             this.dieStreamObserver.onCompleted();
         } else {
+            Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
             this.roll();
         }
         System.out.println("--------------------------------------");
