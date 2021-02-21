@@ -1,10 +1,8 @@
-package com.antocecere77.client;
+package com.antocecere77.client.rpctypes;
 
-import com.antocecere77.models.BankServiceGrpc;
 import com.antocecere77.models.TransferRequest;
 import com.antocecere77.models.TransferServiceGrpc;
-import com.antocecere77.server.TransferService;
-import com.antocecere77.server.TransferStreamingResponse;
+import com.antocecere77.server.rpctypes.TransferStreamingResponse;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;

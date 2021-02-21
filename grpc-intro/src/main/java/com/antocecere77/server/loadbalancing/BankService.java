@@ -1,6 +1,8 @@
-package com.antocecere77.server;
+package com.antocecere77.server.loadbalancing;
 
 import com.antocecere77.models.*;
+import com.antocecere77.server.rpctypes.AccountDatabase;
+import com.antocecere77.server.rpctypes.CashStreamingRequest;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 

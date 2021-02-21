@@ -1,4 +1,4 @@
-package com.antocecere77.server;
+package com.antocecere77.server.rpctypes;
 
 import java.util.Map;
 import java.util.function.Function;

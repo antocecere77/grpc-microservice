@@ -1,4 +1,4 @@
-package com.antocecere77.client;
+package com.antocecere77.client.rpctypes;
 
 import com.antocecere77.models.Money;
 import io.grpc.stub.StreamObserver;

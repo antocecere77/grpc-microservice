@@ -1,4 +1,4 @@
-package com.antocecere77.server;
+package com.antocecere77.server.rpctypes;
 
 import com.antocecere77.models.Balance;
 import com.antocecere77.models.DepositRequest;
