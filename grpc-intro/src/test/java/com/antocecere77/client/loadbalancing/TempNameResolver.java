@@ -33,6 +33,5 @@ public class TempNameResolver extends NameResolver {
         List<EquivalentAddressGroup> addressGroups = ServiceRegistry.getInstances(this.service);
         ResolutionResult resolutionResult = ResolutionResult.newBuilder().setAddresses(addressGroups).build();
         listener.onResult(resolutionResult);
-        super.start(listener);
     }
 }
