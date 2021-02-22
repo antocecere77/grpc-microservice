@@ -1,4 +1,4 @@
-package com.antocecere77.server.loadbalancing;
+package com.antocecere77.client.loadbalancing;
 
 import io.grpc.EquivalentAddressGroup;
 
