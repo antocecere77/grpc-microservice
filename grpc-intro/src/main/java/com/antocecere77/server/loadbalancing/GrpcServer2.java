@@ -1,6 +1,5 @@
 package com.antocecere77.server.loadbalancing;
 
-import com.antocecere77.server.rpctypes.BankService;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
