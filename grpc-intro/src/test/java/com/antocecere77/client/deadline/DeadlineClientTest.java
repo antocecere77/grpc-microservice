@@ -51,7 +51,7 @@ public class DeadlineClientTest {
     @Test
     public void withdrawTest() {
         WithdrawRequest withdrawRequest = WithdrawRequest.newBuilder()
-                .setAccountNumber(7)
+                .setAccountNumber(6)
                 .setAmount(50)
                 .build();
 
