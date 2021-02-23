@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.time.Duration;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -51,11 +52,18 @@ public class DeadlineClientTest {
     public void withdrawTest() {
         WithdrawRequest withdrawRequest = WithdrawRequest.newBuilder()
                 .setAccountNumber(7)
-                .setAmount(40)
+                .setAmount(50)
                 .build();
 
-        this.blockingStub.withdraw(withdrawRequest)
-                .forEachRemaining(money -> System.out.println("Received: " + money.getValue()));
+        try {
+            this.blockingStub
+                    .withDeadline(Deadline.after(4, TimeUnit.SECONDS))
+                    .withdraw(withdrawRequest)
+                    .forEachRemaining(money -> System.out.println("Received: " + money.getValue()));
+        } catch (StatusRuntimeException e) {
+            //
+        }
+
     }
 
     @Test

@@ -40,13 +40,11 @@ public class DeadlineService extends BankServiceGrpc.BankServiceImplBase {
         // all the validation passed
         for (int i = 0; i < (amount/10); i++) {
             Money money = Money.newBuilder().setValue(10).build();
+            //simulate time-consuming call
+            Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
             responseObserver.onNext(money);
+            System.out.println("Delivered $10");
             AccountDatabase.deductBalance(accountNumber, 10);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
 
         responseObserver.onCompleted();
