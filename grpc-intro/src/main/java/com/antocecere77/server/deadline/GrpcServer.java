@@ -1,4 +1,4 @@
-package com.antocecere77.server.rpctypes;
+package com.antocecere77.server.deadline;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -10,8 +10,7 @@ public class GrpcServer {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         Server server = ServerBuilder.forPort(6565)
-                .addService(new BankService())
-                .addService(new TransferService())
+                .addService(new DeadlineService())
                 .build();
 
         server.start();

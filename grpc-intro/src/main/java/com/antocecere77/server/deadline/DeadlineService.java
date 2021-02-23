@@ -1,10 +1,12 @@
-package com.antocecere77.server.rpctypes;
+package com.antocecere77.server.deadline;
 
 import com.antocecere77.models.*;
+import com.antocecere77.server.rpctypes.AccountDatabase;
+import com.antocecere77.server.rpctypes.CashStreamingRequest;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
-public class BankService extends BankServiceGrpc.BankServiceImplBase {
+public class DeadlineService extends BankServiceGrpc.BankServiceImplBase {
 
     @Override
     public void getBalance(BalanceCheckRequest request, StreamObserver<Balance> responseObserver) {
