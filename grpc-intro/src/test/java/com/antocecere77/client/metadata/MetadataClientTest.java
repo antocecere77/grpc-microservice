@@ -44,7 +44,7 @@ public class MetadataClientTest {
 
             System.out.println("Received: " + balance.getAmount());
         } catch (StatusRuntimeException e) {
-            //go with default value
+           e.printStackTrace();
         }
     }
 
