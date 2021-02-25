@@ -3,6 +3,11 @@ package com.antocecere77.server.metadata;
 import io.grpc.*;
 import java.util.Objects;
 
+/*
+    user-secret-3: prime
+    user-secret-2: regular
+*/
+
 public class AuthInterceptor implements ServerInterceptor {
 
     @Override
@@ -11,7 +16,13 @@ public class AuthInterceptor implements ServerInterceptor {
         //String clientToken = metadata.get(ServerConstants.TOKEN);
         String clientToken = metadata.get(ServerConstants.USER_TOKEN);
         if(this.validate(clientToken)) {
-            return serverCallHandler.startCall(serverCall, metadata);
+            UserRole userRole = this.extractUserRole(clientToken);
+            Context context = Context.current().withValue(
+                    ServerConstants.CTX_USER_ROLE,
+                    userRole
+            );
+            //return serverCallHandler.startCall(serverCall, metadata);
+            return Contexts.interceptCall(context, serverCall, metadata, serverCallHandler);
         } else {
             Status status = Status.UNAUTHENTICATED.withDescription("invalid token/expired token");
             serverCall.close(status, metadata);
@@ -21,8 +32,14 @@ public class AuthInterceptor implements ServerInterceptor {
     }
 
     private boolean validate(String token) {
-
         //return Objects.nonNull(token) && token.equals("bank-client-secret");
-        return Objects.nonNull(token) && token.equals("user-secret-3");
+        return Objects.nonNull(token) &&
+                (token.startsWith("user-secret-3") || token.startsWith("user-secret-2"));
+    }
+
+    private UserRole extractUserRole(String jwt) {
+        return jwt.endsWith("prime")
+                ? UserRole.PRIME
+                : UserRole.STANDARD;
     }
 }
