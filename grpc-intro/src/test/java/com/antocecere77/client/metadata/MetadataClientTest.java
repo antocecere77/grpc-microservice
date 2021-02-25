@@ -44,7 +44,7 @@ public class MetadataClientTest {
             System.out.println("Random: " + random);
             try {
                 Balance balance = this.blockingStub
-                        .withCallCredentials(new UserSessionToken("user-secret-" + random))
+                        .withCallCredentials(new UserSessionToken("user-secret-" + random + ":prime"))
                         .getBalance(balanceCheckRequest);
 
                 System.out.println("Received: " + balance.getAmount());
