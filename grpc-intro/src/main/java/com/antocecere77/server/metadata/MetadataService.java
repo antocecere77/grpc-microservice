@@ -15,10 +15,17 @@ public class MetadataService extends BankServiceGrpc.BankServiceImplBase {
     public void getBalance(BalanceCheckRequest request, StreamObserver<Balance> responseObserver) {
 
         int accountNumber = request.getAccountNumber();
-        Balance balance = Balance.newBuilder()
-                .setAmount(AccountDatabase.getBalance(accountNumber))
-                .build();
+        int amount = AccountDatabase.getBalance(accountNumber);
+        UserRole userRole = ServerConstants.CTX_USER_ROLE.get();
+        UserRole userRole1 = ServerConstants.CTX_USER_ROLE1.get();
+        amount = UserRole.PRIME.equals(userRole)
+                ? amount
+                : (amount - 15);
 
+        System.out.println(userRole + ":" + userRole1);
+        Balance balance = Balance.newBuilder()
+                .setAmount(amount)
+                .build();
         //simulate time-consuming call
         //Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
         responseObserver.onNext(balance);
