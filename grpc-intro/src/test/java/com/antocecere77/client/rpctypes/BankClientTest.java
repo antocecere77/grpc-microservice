@@ -3,11 +3,16 @@ package com.antocecere77.client.rpctypes;
 import com.antocecere77.models.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.netty.shaded.io.grpc.netty.GrpcSslContexts;
+import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
+import io.grpc.netty.shaded.io.netty.handler.ssl.SslContext;
 import io.grpc.stub.StreamObserver;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import javax.net.ssl.SSLException;
+import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -17,9 +22,15 @@ public class BankClientTest {
     private BankServiceGrpc.BankServiceStub bankServiceStub;
 
     @BeforeAll
-    public void setup() {
-        ManagedChannel managedChannel = ManagedChannelBuilder.forAddress("localhost", 6565)
-                .usePlaintext()
+    public void setup() throws SSLException {
+
+        SslContext sslContext = GrpcSslContexts.forClient()
+                .trustManager(new File("D:\\Project\\Udemy\\grpc-java-course\\ssl-tls\\ca.cert.pem"))
+                .build();
+
+        ManagedChannel managedChannel = NettyChannelBuilder.forAddress("localhost", 6565)
+                .sslContext(sslContext)
+                //.usePlaintext()
                 .build();
 
         this.blockingStub = BankServiceGrpc.newBlockingStub(managedChannel);
